@@ -5,6 +5,7 @@ import { Event } from "./components/Event";
 import { TimeGutter } from "./components/TimeGutter";
 import { getDataFromSessionStorage, saveDataInSessionStorage } from "./helper/storage";
 import type { ProcessedEvent, RawEvent } from "./types/events.type";
+import { areEventsValid } from "./utils/validators";
 
 /**
  * Default set of events used when the application initializes if no data
@@ -88,6 +89,9 @@ export function App() {
             console.error(`Invalid argument: Expected an array, received ${typeof rawEvents}`);
             return;
         }
+
+        if (!areEventsValid(rawEvents)) return;
+
         if (!rawEvents.length) {
             console.warn("The Array is Empty");
             return;
