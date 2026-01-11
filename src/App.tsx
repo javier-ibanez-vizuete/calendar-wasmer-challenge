@@ -23,7 +23,7 @@ const INITIAL_EVENTS_INPUT = [
  * Fallback data used in case of processing errors or empty results to ensure
  * the UI always renders a demonstrable state.
  */
-const mokaProcessedEvents = const mokaProcessedEvents = [
+const mokaProcessedEvents = [
     {
         start: 540,
         end: 600,
