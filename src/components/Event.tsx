@@ -16,7 +16,8 @@ import { MAX_EVENT_WIDTH } from "../utils/constants";
  * @returns {JSX.Element} An article element representing the visual event block.
  */
 export function Event({ event }: EventProps) {
-    const baseEventConfig = "absolute bg-accent-background pl-2 flex border-1 border-accent-background";
+    const baseEventConfig =
+        "absolute overflow-hidden bg-accent-background pl-2 flex border-1 border-accent-background";
     const styleEventConfig = useMemo(
         () => ({
             top: `${event?.start}px`,
@@ -30,8 +31,8 @@ export function Event({ event }: EventProps) {
     return (
         <article className={baseEventConfig} style={styleEventConfig}>
             <div className="flex-1 bg-white">
-                <h3>Sample Title</h3>
-                <h5>Sample Location</h5>
+                <h5>Sample Title</h5>
+                <small>Sample Location</small>
             </div>
         </article>
     );
