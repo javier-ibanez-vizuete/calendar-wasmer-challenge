@@ -23,11 +23,43 @@ const INITIAL_EVENTS_INPUT = [
  * Fallback data used in case of processing errors or empty results to ensure
  * the UI always renders a demonstrable state.
  */
-const mokaProcessedEvents = [
-    { start: 540, end: 600, id: 1, colIndex: 0, totalCols: 4 },
-    { start: 560, end: 620, id: 2, colIndex: 1, totalCols: 4 },
-    { start: 30, end: 150, id: 3, colIndex: 2, totalCols: 4 },
-    { start: 610, end: 670, id: 4, colIndex: 3, totalCols: 4 },
+const mokaProcessedEvents = const mokaProcessedEvents = [
+    {
+        start: 540,
+        end: 600,
+        id: 1,
+        colIndex: 0,
+        totalCols: 4,
+        title: "Tarjet 1",
+        description: "Description 1",
+    },
+    {
+        start: 560,
+        end: 620,
+        id: 2,
+        colIndex: 1,
+        totalCols: 4,
+        title: "Tarjeta 2",
+        description: "Description 2",
+    },
+    {
+        start: 30,
+        end: 150,
+        id: 3,
+        colIndex: 2,
+        totalCols: 4,
+        title: "Tarjeta 3",
+        description: "Description 3",
+    },
+    {
+        start: 610,
+        end: 670,
+        id: 4,
+        colIndex: 3,
+        totalCols: 4,
+        title: "Tarjeta 4",
+        description: "Description 4",
+    },
 ];
 
 export function App() {
