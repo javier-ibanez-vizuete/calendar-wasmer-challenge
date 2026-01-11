@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { getEventsByGroups, processEventsFromGroups, sortedRawEventByStart } from "./calendar/eventUtils";
 import { Calendar } from "./components/Calendar";
 import { Event } from "./components/Event";
+import { Modal } from "./components/Modal";
 import { TimeGutter } from "./components/TimeGutter";
 import { getDataFromSessionStorage, saveDataInSessionStorage } from "./helper/storage";
 import type { ProcessedEvent, RawEvent } from "./types/events.type";
@@ -29,18 +30,6 @@ const mokaProcessedEvents = [
     { start: 610, end: 670, id: 4, colIndex: 3, totalCols: 4 },
 ];
 
-/**
- * The main application component for the Wasmer Calendar Challenge.
- *
- * This component orchestrates the entire calendar logic:
- * 1. Manages the state of raw events (persisted in SessionStorage).
- * 2. Processes raw events into layout-ready events (calculating positions and collisions).
- * 3. Exposes the required global API `window.layOutDay` for external interaction.
- * 4. Renders the TimeGutter and the Calendar visualization.
- *
- * @component
- * @returns {JSX.Element} The rendered application.
- */
 export function App() {
     /**
      * State holding the raw event data.
@@ -50,6 +39,9 @@ export function App() {
         const rawEventsFromStorage = getDataFromSessionStorage("newRawEvents");
         return (rawEventsFromStorage as RawEvent[]) || INITIAL_EVENTS_INPUT;
     });
+
+    const [showModal, setShowModal] = useState(false);
+    const [modalInfo, setModalInfo] = useState<ProcessedEvent | null>(null);
 
     /**
      * Memoized computation of processed events.
@@ -84,7 +76,7 @@ export function App() {
      *
      * @param {RawEvent[]} rawEvents - Array of objects with start and end properties.
      */
-    const handleNewEvents = (rawEvents: RawEvent[]): void => {
+    const handleNewEvents = useCallback((rawEvents: RawEvent[]): void => {
         if (!Array.isArray(rawEvents)) {
             console.error(`Invalid argument: Expected an array, received ${typeof rawEvents}`);
             return;
@@ -96,10 +88,9 @@ export function App() {
             console.warn("The Array is Empty");
             return;
         }
-
         setEvents(rawEvents);
         saveDataInSessionStorage("newRawEvents", rawEvents);
-    };
+    }, []);
 
     /**
      * Effect to bind the `layOutDay` function to the global window object.
@@ -112,16 +103,28 @@ export function App() {
         return () => {
             delete window.layOutDay;
         };
+    }, [handleNewEvents]);
+
+    const onCloseModal = useCallback(() => setShowModal(false), []);
+    const onOpenModal = useCallback((event: ProcessedEvent) => {
+        setModalInfo(event);
+        setShowModal(true);
     }, []);
 
     return (
         <>
             <h1>Challenge Calendar Wasmer</h1>
+            <Modal
+                isOpen={showModal}
+                onClose={() => onCloseModal()}
+                title={modalInfo?.title}
+                description={modalInfo?.description}
+            />
             <div className="flex p-4">
                 <TimeGutter />
                 <Calendar>
                     {processedEvents.map((event) => (
-                        <Event key={event.id} event={event} />
+                        <Event key={event.id} event={event} onClick={() => onOpenModal(event)} />
                     ))}
                 </Calendar>
             </div>

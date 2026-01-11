@@ -85,6 +85,8 @@ export const processEventsFromGroups = (eventsGroups: RawEvent[][]): ProcessedEv
                 id: globalIdCounter++,
                 colIndex: assignedColIndex,
                 totalCols: 0,
+                title: `Tarjeta ${globalIdCounter - 1}`,
+                description: `Description de tarjeta ${globalIdCounter - 1}`,
             };
 
             groupWithData.push(newEvent);

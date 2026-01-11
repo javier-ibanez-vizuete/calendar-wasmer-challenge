@@ -15,7 +15,7 @@ import { MAX_EVENT_WIDTH } from "../utils/constants";
  * @param {ProcessedEvent} props.event - The processed event data containing start/end times and layout coordinates.
  * @returns {JSX.Element} An article element representing the visual event block.
  */
-export function Event({ event }: EventProps) {
+export function Event({ event, onClick }: EventProps) {
     const baseEventConfig =
         "absolute overflow-hidden bg-accent-background pl-2 flex border-1 border-accent-background";
     const styleEventConfig = useMemo(
@@ -29,10 +29,10 @@ export function Event({ event }: EventProps) {
     );
 
     return (
-        <article className={baseEventConfig} style={styleEventConfig}>
+        <article className={baseEventConfig} style={styleEventConfig} onClick={onClick}>
             <div className="flex-1 bg-white">
-                <h5>Sample Title</h5>
-                <small>Sample Location</small>
+                <h5>{event.title}</h5>
+                <small>{event.description}</small>
             </div>
         </article>
     );
