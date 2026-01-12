@@ -1,7 +1,7 @@
 import type { EventRawGroup, ProcessedEvent, RawEvent } from "../types/events.type";
 
 export const sortedRawEventByStart = (rawEvents: RawEvent[]): RawEvent[] => {
-    return rawEvents.sort((eventA, eventB) => eventA?.start - eventB?.start);
+    return rawEvents.sort((eventA, eventB) => eventA?.start - eventB?.start).slice(0, 100);
 };
 
 export const getEventsByGroups = (sortedEvents: RawEvent[]): EventRawGroup[] => {

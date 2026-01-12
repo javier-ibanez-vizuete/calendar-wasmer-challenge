@@ -73,6 +73,7 @@ export function App() {
 
         const sortedEvents = sortedRawEventByStart(rawEvents);
         if (!sortedEvents || !sortedEvents.length) return mokaProcessedEvents;
+        console.log(sortedEvents);
 
         const eventsGroups = getEventsByGroups(sortedEvents);
         if (!eventsGroups?.length) return mokaProcessedEvents;
