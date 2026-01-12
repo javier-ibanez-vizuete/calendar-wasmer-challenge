@@ -62,8 +62,8 @@ export function App() {
         return (rawEventsFromStorage as RawEvent[]) || INITIAL_EVENTS_INPUT;
     });
 
-    const [showModal, setShowModal] = useState(false);
-    const [modalInfo, setModalInfo] = useState<ProcessedEvent | null>(null);
+    // const [showModal, setShowModal] = useState(false);
+    // const [modalInfo, setModalInfo] = useState<ProcessedEvent | null>(null);
     const { theme } = useTheme();
 
     const processedEvents = useMemo((): ProcessedEvent[] => {
@@ -107,11 +107,11 @@ export function App() {
         };
     }, [handleNewEvents]);
 
-    const onCloseModal = useCallback(() => setShowModal(false), []);
-    const onOpenModal = useCallback((event: ProcessedEvent) => {
-        setModalInfo(event);
-        setShowModal(true);
-    }, []);
+    // const onCloseModal = useCallback(() => setShowModal(false), []);
+    // const onOpenModal = useCallback((event: ProcessedEvent) => {
+    //     setModalInfo(event);
+    //     setShowModal(true);
+    // }, []);
 
     const baseAppConfig = useMemo(
         () =>
