@@ -1,4 +1,6 @@
+import classNames from "classnames";
 import { useMemo } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 import type { CalendarProps } from "../types/component_props";
 import { CONTAINER_HEIGHT, CONTAINER_PADDING, CONTAINER_WIDTH } from "../utils/constants";
 
@@ -16,7 +18,16 @@ import { CONTAINER_HEIGHT, CONTAINER_PADDING, CONTAINER_WIDTH } from "../utils/c
  * @returns {JSX.Element} The structural section element wrapping the calendar content.
  */
 export function Calendar({ children }: CalendarProps) {
-    const baseCalendarConfig = `relative bg-background overflow-hidden`;
+    const { theme } = useTheme();
+
+    const baseCalendarConfig = useMemo(
+        () =>
+            classNames("relative overflow-hidden rounded-sm", {
+                "bg-accent-background": theme === "light",
+                "bg-accent-background-dark": theme !== "light",
+            }),
+        [theme]
+    );
     const styleCalendarConfig = useMemo(
         () => ({
             width: `${CONTAINER_WIDTH}px`,

@@ -1,23 +1,11 @@
+import classNames from "classnames";
 import { useMemo } from "react";
+import { useTheme } from "../contexts/ThemeContext";
 import type { EventProps } from "../types/component_props";
 import { MAX_EVENT_WIDTH } from "../utils/constants";
 
-/**
- * Renders a single event item within the calendar grid.
- *
- * This component calculates the exact visual position and dimensions of the event
- * based on its start time, duration, and collision group data. It uses absolute
- * positioning to place the event in the correct time slot and column, ensuring
- * it shares width proportionally if it overlaps with other events.
- *
- * @component
- * @param {EventProps} props - The component properties.
- * @param {ProcessedEvent} props.event - The processed event data containing start/end times and layout coordinates.
- * @returns {JSX.Element} An article element representing the visual event block.
- */
 export function Event({ event, onClick }: EventProps) {
-    const baseEventConfig =
-        "absolute overflow-hidden bg-accent-background pl-2 flex border-1 border-accent-background";
+    const { theme } = useTheme();
     const styleEventConfig = useMemo(
         () => ({
             top: `${event?.start}px`,
@@ -28,9 +16,30 @@ export function Event({ event, onClick }: EventProps) {
         [event]
     );
 
+    const baseEventContainerConfig = useMemo(
+        () =>
+            classNames(
+                "absolute overflow-hidden pl-2.5 flex border-accent-background rounded-sm cursor-pointer",
+                {
+                    "bg-primary": theme === "light",
+                    "bg-primary-dark": theme !== "light",
+                }
+            ),
+        [theme]
+    );
+
+    const baseEventContentConfig = useMemo(
+        () =>
+            classNames("flex flex-col flex-1 pl-2", {
+                "bg-secondary": theme === "light",
+                "bg-secondary-dark text-white": theme !== "light",
+            }),
+        [theme]
+    );
+
     return (
-        <article className={baseEventConfig} style={styleEventConfig} onClick={onClick}>
-            <div className="flex-1 bg-white">
+        <article className={baseEventContainerConfig} style={styleEventConfig} onClick={onClick}>
+            <div className={baseEventContentConfig}>
                 <h5>{event.title}</h5>
                 <small>{event.description}</small>
             </div>

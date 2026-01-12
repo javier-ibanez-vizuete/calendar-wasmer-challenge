@@ -7,8 +7,17 @@ body {
 }
 
 @theme {
-    --color-background: #e7eff2;
-    --color-accent-background: #2237f0;
+    --color-background: #f2e8fa;
+    --color-background-dark: #bab2c0;
+
+    --color-accent-background: #f8fafd;
+    --color-accent-background-dark: #565656;
+
+    --color-primary: #2638dd;
+    --color-primary-dark: #0d134c;
+
+    --color-secondary: #f4511e;
+    --color-secondary-dark: #e3683e;
 }
 
 @layer base {
@@ -17,7 +26,7 @@ body {
     }
 
     h1 {
-        @apply text-4xl font-extrabold;
+        @apply text-3xl font-extrabold;
     }
 
     h2 {
