@@ -4,7 +4,6 @@ import { getEventsByGroups, processEventsFromGroups, sortedRawEventByStart } fro
 import { Calendar } from "./components/Calendar";
 import { Event } from "./components/Event";
 import { ExerciseContainer } from "./components/ExerciseContainer";
-import { Modal } from "./components/Modal";
 import { TimeGutter } from "./components/TimeGutter";
 import { useTheme } from "./contexts/ThemeContext";
 import { getDataFromSessionStorage, saveDataInSessionStorage } from "./helper/storage";
@@ -129,18 +128,18 @@ export function App() {
                 <h1>Calendar Wasmer Challenge</h1>
                 <ThemeButton />
             </header> */}
-            <Modal
+            {/* <Modal
                 isOpen={showModal}
                 onClose={() => onCloseModal()}
                 title={modalInfo?.title}
                 description={modalInfo?.description}
-            />
+            /> */}
             <ExerciseContainer>
                 <TimeGutter />
                 <Calendar>
                     {/* <TimeLines /> */}
                     {processedEvents.map((event) => (
-                        <Event key={event.id} event={event} onClick={() => onOpenModal(event)} />
+                        <Event key={event.id} event={event} />
                     ))}
                 </Calendar>
             </ExerciseContainer>

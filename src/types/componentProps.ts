@@ -7,5 +7,5 @@ export type CalendarProps = {
 
 export type EventProps = {
     event: ProcessedEvent;
-    onClick: () => void;
+    onClick?: () => void;
 };
