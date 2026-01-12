@@ -1,3 +1,7 @@
+import classNames from "classnames";
+import { useMemo } from "react";
+import { useTheme } from "../contexts/ThemeContext";
+
 type ModalProps = {
     isOpen: boolean;
     onClose: () => void;
@@ -6,27 +10,45 @@ type ModalProps = {
 };
 
 export function Modal({
-    isOpen = true,
+    isOpen = false,
     onClose,
     title = "Event Title",
     description = "Event description",
 }: ModalProps) {
+    const { theme } = useTheme();
+
+    const baseModalContainerConfig = useMemo(
+        () =>
+            classNames("bg-primary pl-4 relative z-50 rounded-md shadow-xl overflow-hidden", {
+                "bg-primary": theme === "light",
+                "bg-primary-dark": theme !== "light",
+            }),
+        [theme]
+    );
+
+    const baseModalContentConfig = useMemo(
+        () =>
+            classNames("flex flex-col items-center justify-center w-80 h-60", {
+                "bg-secondary": theme === "light",
+                "bg-secondary-dark text-white": theme !== "light",
+            }),
+        [theme]
+    );
+
     if (!isOpen) return null;
     return (
         <div className="flex justify-center items-center fixed inset-0 z-40">
             <div className="backdrop-blur-xs fixed inset-0" />
-            <div className="bg-accent-background pl-8 realtive z-50">
-                <div className="bg-white flex">
-                    <div className="flex flex-col relative items-center justify-center min-w-80 min-h-80">
-                        <button
-                            className="absolute top-4 right-4 text-2xl hover:scale-125 transition-all ease-in-out duration-300"
-                            onClick={onClose}
-                        >
-                            X
-                        </button>
-                        <h1>{title}</h1>
-                        <h5>{description}</h5>
-                    </div>
+            <div className={baseModalContainerConfig}>
+                <div className={baseModalContentConfig}>
+                    <button
+                        className="absolute text-red-700 hover:text-red-800 top-4 right-4 text-2xl hover:scale-125 transition-all ease-in-out duration-500"
+                        onClick={onClose}
+                    >
+                        X
+                    </button>
+                    <h1>{title}</h1>
+                    <h5>{description}</h5>
                 </div>
             </div>
         </div>

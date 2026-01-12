@@ -1,9 +1,13 @@
+import classNames from "classnames";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { getEventsByGroups, processEventsFromGroups, sortedRawEventByStart } from "./calendar/eventUtils";
 import { Calendar } from "./components/Calendar";
 import { Event } from "./components/Event";
+import { ExerciseContainer } from "./components/ExerciseContainer";
 import { Modal } from "./components/Modal";
 import { TimeGutter } from "./components/TimeGutter";
+import { ThemeButton } from "./components/UI/ThemeButton";
+import { useTheme } from "./contexts/ThemeContext";
 import { getDataFromSessionStorage, saveDataInSessionStorage } from "./helper/storage";
 import type { ProcessedEvent, RawEvent } from "./types/events.type";
 import { areEventsValid } from "./utils/validators";
@@ -74,6 +78,7 @@ export function App() {
 
     const [showModal, setShowModal] = useState(false);
     const [modalInfo, setModalInfo] = useState<ProcessedEvent | null>(null);
+    const { theme } = useTheme();
 
     /**
      * Memoized computation of processed events.
@@ -143,23 +148,35 @@ export function App() {
         setShowModal(true);
     }, []);
 
+    const baseAppConfig = useMemo(
+        () =>
+            classNames("flex flex-col items-center", {
+                "bg-background": theme === "light",
+                "bg-background-dark": theme !== "light",
+            }),
+        [theme]
+    );
+
     return (
-        <>
-            <h1>Challenge Calendar Wasmer</h1>
+        <div className={baseAppConfig}>
+            <header className="flex gap-4">
+                <h1>Calendar Wasmer Challenge</h1>
+                <ThemeButton />
+            </header>
             <Modal
                 isOpen={showModal}
                 onClose={() => onCloseModal()}
                 title={modalInfo?.title}
                 description={modalInfo?.description}
             />
-            <div className="flex p-4">
+            <ExerciseContainer>
                 <TimeGutter />
                 <Calendar>
                     {processedEvents.map((event) => (
                         <Event key={event.id} event={event} onClick={() => onOpenModal(event)} />
                     ))}
                 </Calendar>
-            </div>
-        </>
+            </ExerciseContainer>
+        </div>
     );
 }
