@@ -1,10 +1,11 @@
+import classNames from "classnames";
 import { useMemo } from "react";
 import { CONTAINER_HEIGHT } from "../utils/constants";
 import { generateTimeGrid } from "../utils/timeGrid";
 
 const baseTimeGutterConfig = "relative w-20";
 
-const baseSlotConfig = "absolute -translate-y-1/2 right-2 text-md";
+const baseSlotConfig = "absolute -translate-y-1/2 text-md";
 
 export function TimeGutter() {
     const timeSlots = useMemo(() => generateTimeGrid(), []);
@@ -21,7 +22,10 @@ export function TimeGutter() {
             {timeSlots.map((slot) => (
                 <p
                     key={`${slot.timeLabel}-${slot.formatLabel}`}
-                    className={baseSlotConfig}
+                    className={classNames(baseSlotConfig, {
+                        "text-xs right-1": !slot?.isHour,
+                        "right-2": slot?.isHour,
+                    })}
                     style={{ top: `${slot.top}px`, opacity: `${!slot.isHour ? "50" : "100"}%` }}
                 >
                     {slot.timeLabel}
