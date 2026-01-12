@@ -5,6 +5,11 @@ type TimeSlot = {
     isHour: boolean;
 };
 
+type TimeLine = {
+    top: number;
+    isHour: boolean;
+};
+
 export const generateTimeGrid = (): TimeSlot[] => {
     const slots: TimeSlot[] = [];
     const totalMinutes = 720;
@@ -31,4 +36,21 @@ export const generateTimeGrid = (): TimeSlot[] => {
         slots.push(newSlot);
     }
     return slots;
+};
+
+export const generateTimeLines = (): TimeLine[] => {
+    const lines: TimeLine[] = [];
+    const totalMinutes = 720;
+    const interval = 30;
+
+    for (let index = 0; index <= totalMinutes; index += interval) {
+        const isHour = index % 60 === 0;
+        const newLine = {
+            top: index,
+            isHour: isHour,
+        };
+        lines.push(newLine);
+    }
+
+    return lines;
 };

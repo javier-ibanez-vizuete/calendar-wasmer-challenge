@@ -6,6 +6,7 @@ import { Event } from "./components/Event";
 import { ExerciseContainer } from "./components/ExerciseContainer";
 import { Modal } from "./components/Modal";
 import { TimeGutter } from "./components/TimeGutter";
+import { TimeLines } from "./components/TimeLines";
 import { ThemeButton } from "./components/UI/ThemeButton";
 import { useTheme } from "./contexts/ThemeContext";
 import { getDataFromSessionStorage, saveDataInSessionStorage } from "./helper/storage";
@@ -172,6 +173,7 @@ export function App() {
             <ExerciseContainer>
                 <TimeGutter />
                 <Calendar>
+                    <TimeLines />
                     {processedEvents.map((event) => (
                         <Event key={event.id} event={event} onClick={() => onOpenModal(event)} />
                     ))}
